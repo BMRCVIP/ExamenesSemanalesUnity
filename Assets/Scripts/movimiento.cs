@@ -5,14 +5,19 @@ using UnityEngine;
 public class movimiento : MonoBehaviour
 {
 
-    public float fuerzaSalto=25;
-    public float velocity = 10;
+    public float fuerzaSalto=40;
+    public float velocity;
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator animator;
-
-
+    const int ANIMATION_PARADO=0;
+    const int ANIMATION_CORRER=1;
+    const int ANIMATION_SALTAR=2;
+    const int ANIMATION_CAMINAR=3;
+    const int ANIMATION_ATAQUE=4;
     // Start is called before the first frame update
+    //Triggers
+    private Vector3 lastCheckPosition;
     void Start()
     {
          Debug.Log("Hola mundo");
@@ -20,32 +25,25 @@ public class movimiento : MonoBehaviour
         sr= GetComponent<SpriteRenderer>();
         animator =GetComponent<Animator>();
     }
-
     // Update is called once per frame
     void Update()
     {
          rb.velocity = new Vector2(0, rb.velocity.y);
-        animator.SetInteger("estadoRey",0);
+       changeAnimation(ANIMATION_PARADO);
         if(Input.GetKey(KeyCode.RightArrow))
         {
             rb.velocity = new Vector2(2, rb.velocity.y);
             sr.flipX=false;
-            animator.SetInteger("estadoRey",3);
+            changeAnimation(ANIMATION_CAMINAR);
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = new Vector2(-2, rb.velocity.y);
             sr.flipX=true;
-            animator.SetInteger("estadoRey",3);
-        }
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            rb.velocity =new Vector2(rb.velocity.x, 2);
-            animator.SetInteger("estadoRey",2);
-            rb.AddForce(new Vector2(0, fuerzaSalto),ForceMode2D.Impulse);
+            changeAnimation(ANIMATION_CAMINAR);
         }
         if (Input.GetKey("z")){
-            animator.SetInteger("estadoRey",4);
+            changeAnimation(ANIMATION_ATAQUE);
         }
          if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey("x"))
         {
@@ -57,10 +55,35 @@ public class movimiento : MonoBehaviour
         {
             rb.velocity = new Vector2(-5, rb.velocity.y);
             sr.flipX=true;
-            animator.SetInteger("estadoRey",1);
+            changeAnimation(ANIMATION_CORRER);
         }
+       else if(Input.GetKeyUp(KeyCode.Space))
+        {
+            rb.velocity =new Vector2(rb.velocity.x, 2);
+            changeAnimation(ANIMATION_SALTAR);
+            rb.AddForce(new Vector2(0, fuerzaSalto),ForceMode2D.Impulse);  
 
+        }  
+    }
+    private void changeAnimation(int animation){
+        animator.SetInteger("estadoRey",animation);
+    }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log("Puede saltar");
+        if(other.gameObject.tag=="Enemy")
+        {
+            Debug.Log("Deberias estar muerto");       
+        }
+        if(other.gameObject.tag=="BaseMuerte"){
+            if(lastCheckPosition!= null){
+                transform.position=lastCheckPosition;
+            }
 
-        
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other){
+        Debug.Log("trigger");
+        lastCheckPosition =transform.position;
     }
 }
