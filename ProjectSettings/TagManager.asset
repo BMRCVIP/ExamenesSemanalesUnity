@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BaseMuerte
+  - Enemy
+  - spiderBall
   layers:
   - Default
   - TransparentFX

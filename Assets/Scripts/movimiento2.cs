@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class movimiento : MonoBehaviour
+public class movimiento2 : MonoBehaviour
 {
     public Transform FirePoint;
     public GameObject Bullet;
@@ -38,46 +38,12 @@ public class movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("a"))
-        {
-            Instantiate(Bullet, FirePoint.position, FirePoint.rotation);
-        }
-        transform.eulerAngles = new Vector3(0, 0, 0);
-            rb.velocity = new Vector2(3, rb.velocity.y);
-            sr.flipX=false;
-            changeAnimation(ANIMATION_CORRER);
 
-        /*if(Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+         transform.eulerAngles = new Vector3(0, 180, 0);
             rb.velocity = new Vector2(-2, rb.velocity.y);
             sr.flipX=false;
             changeAnimation(ANIMATION_CAMINAR);
-        }*/
-        if (Input.GetKey("z")){
-            changeAnimation(ANIMATION_ATAQUE);
-        }
-         if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey("x"))
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-            rb.velocity = new Vector2(5, rb.velocity.y);
-            sr.flipX=false;
-            animator.SetInteger("estadoRey",1);
-        }
-        if(Input.GetKey(KeyCode.LeftArrow)&& Input.GetKey("x"))
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-            rb.velocity = new Vector2(-5, rb.velocity.y);
-            sr.flipX=false;
-            changeAnimation(ANIMATION_CORRER);
-        }
-       else if(Input.GetKeyUp(KeyCode.Space))
-        {
-            rb.velocity =new Vector2(rb.velocity.x, 2);
-            changeAnimation(ANIMATION_SALTAR);
-            rb.AddForce(new Vector2(0, fuerzaSalto),ForceMode2D.Impulse);  
 
-        } 
 //No tocar
         //rb.velocity = new Vector2(0, rb.velocity.y);
        //changeAnimation(ANIMATION_PARADO);
