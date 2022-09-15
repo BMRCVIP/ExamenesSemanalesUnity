@@ -22,11 +22,22 @@ public class Bullet : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
+        Destroy(this.gameObject);
+        /*if(other.gameObject.tag=="Enemy")
+        {
+            Destroy(other.gameObject);
+            //
+            gameManager.GanarPuntos(10);
+            //guardar información
+            gameManager.SaveGame();
+
+        }*/
         if(other.gameObject.tag=="Enemy")
         {
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
-            gameManager.GanarPuntos(1);
+            Debug.Log("Deberias estar muerto");
+            gameManager.PerderVida();
         }
+        
     }
 }

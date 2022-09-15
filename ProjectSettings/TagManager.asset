@@ -7,6 +7,11 @@ TagManager:
   - BaseMuerte
   - Enemy
   - spiderBall
+  - piso
+  - Enemy2
+  - silver
+  - gold
+  - bronze
   layers:
   - Default
   - TransparentFX
